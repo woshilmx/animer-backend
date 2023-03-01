@@ -81,15 +81,39 @@
 
 - 知识闯关
   - 题目的管理
-    - 增删改查
+  - 请求方式post
+  - 请求参数
+
+  ~~~java
+    /**
+       * 类型
+       */
+      private Integer type;
+  
+      /**
+       * 答案
+       */
+      private String answer;
+  
+      /**
+       * 解析
+       */
+      private String analysis;
+  
+      /**
+       * 所属关卡
+       */
+      private Integer belonglevel;
+  ~~~
+
   - 用户闯关进度管理
     - 答题情况增删改查
     - 答题加积分
-  
+
 - 濒危动物信息管理
   	
   	- 增删改查
-    
+   
    - 不同类别
 
   	- 有关病危动物的新闻管理
