@@ -20,15 +20,6 @@ public class TopicBankQueryRequest extends PageRequest implements Serializable {
      */
     private Integer type;
 
-    /**
-     * 答案
-     */
-    private String answer;
-
-    /**
-     * 解析
-     */
-    private String analysis;
 
     /**
      * 所属关卡

@@ -2,6 +2,10 @@ package com.lmx.project.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lmx.project.model.entity.Usertopicbank;
+import com.lmx.project.model.vo.TopicBankVo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author Lenovo
@@ -9,5 +13,9 @@ import com.lmx.project.model.entity.Usertopicbank;
 * @createDate 2023-02-28 23:36:08
 */
 public interface UsertopicbankService extends IService<Usertopicbank> {
+
+    List<Integer> getlevelByUserid(@Param("") Long userid);
+
+    List<TopicBankVo> getTopicBankBlevel(Long userid, Long level);
 
 }

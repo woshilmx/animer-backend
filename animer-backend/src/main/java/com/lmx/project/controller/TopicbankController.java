@@ -14,6 +14,7 @@ import com.lmx.project.model.dto.Topicbank.TopicbankUpdateRequest;
 import com.lmx.project.model.dto.usertopicbank.UserTopicBankAddRequest;
 import com.lmx.project.model.entity.Topicbank;
 import com.lmx.project.model.entity.Usertopicbank;
+import com.lmx.project.model.vo.TopicBankVo;
 import com.lmx.project.service.TopicbankService;
 import com.lmx.project.service.UsertopicbankService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -60,15 +61,19 @@ public class TopicbankController {
         if (topicbankAdd.getType() == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "题目类型错误");
         }
-        if (StringUtils.isNotBlank(topicbankAdd.getAnswer())) {
+        if (!StringUtils.isNotBlank(topicbankAdd.getAnswer())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "答案不能为空");
         }
 
-        if (StringUtils.isNotBlank(topicbankAdd.getAnalysis())) {
+        if (!StringUtils.isNotBlank(topicbankAdd.getAnalysis())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "解析不能为空");
         }
         if (topicbankAdd.getBelonglevel() == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "所属关卡错误");
+        }
+
+        if (topicbankAdd.getQuestion()==null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "题目不能为空");
         }
 
         Topicbank topicbank = new Topicbank();
@@ -141,7 +146,7 @@ public class TopicbankController {
 
 
     /**
-     * 查询多个题目信息
+     * 查询多个题目信息,根据关卡查询题目信息
      */
     @PostMapping("list")
     public BaseResponse<IPage<Topicbank>> getTopicBank(@RequestBody TopicBankQueryRequest topicBankQueryRequest) {
@@ -152,14 +157,13 @@ public class TopicbankController {
         BeanUtils.copyProperties(topicBankQueryRequest, topicbank);
 
 //        根据类型查询
-        if (topicbank.getType() != 0 && topicbank.getBelonglevel() != null) {
+        if (topicbank.getType()!=null && topicbank.getType() != 0 && topicbank.getBelonglevel() != null) {
             topicbankLambdaQueryWrapper.eq(Topicbank::getType, topicbank.getType());
         }
-        if (0 != topicbank.getBelonglevel() && topicbank.getBelonglevel() != null) {
+        if (topicbank.getBelonglevel()!=null && 0 != topicbank.getBelonglevel() && topicbank.getBelonglevel() != null) {
 
             topicbankLambdaQueryWrapper.eq(Topicbank::getBelonglevel, topicbank.getBelonglevel());
         }
-
         IPage<Topicbank> page = new Page<>(topicBankQueryRequest.getCurrent(),
                 topicBankQueryRequest.getPageSize());
         IPage<Topicbank> resultpage = topicbankService.page(page, topicbankLambdaQueryWrapper);
@@ -168,7 +172,7 @@ public class TopicbankController {
 
 
     /**
-     * 题目答对状态
+     * 插入答题的状态
      */
     @PostMapping("usertopicbank")
     public BaseResponse<Boolean> addUserTopicBank(@RequestBody UserTopicBankAddRequest userTopicBankAddRequest) {
@@ -187,11 +191,17 @@ public class TopicbankController {
 
         // 根据userid questionid查询是否已作答
         LambdaQueryWrapper<Usertopicbank> queryWrapper = new LambdaQueryWrapper<>();
-
+        queryWrapper.eq(Usertopicbank::getUserid, userTopicBankAddRequest.getUserid())
+                .eq(Usertopicbank::getQuestionid, userTopicBankAddRequest.getQuestionid());
         List<Usertopicbank> list = usertopicbankService.list(queryWrapper);
 //         如果表中以有说明已经作答，直接返回
         if (list != null && list.size() > 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "该问题已作答");
+//             防止二次答题的情况
+            Usertopicbank usertopicbank = new Usertopicbank();
+
+            BeanUtils.copyProperties(userTopicBankAddRequest, usertopicbank);
+            usertopicbankService.update(usertopicbank, queryWrapper);
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "该问题已作答");
         }
         //           TODO 根据用户id 查询该用户是否存在
 //        查询题目是否存在
@@ -204,8 +214,7 @@ public class TopicbankController {
         BeanUtils.copyProperties(userTopicBankAddRequest, target);
 
 
-
-        if (userTopicBankAddRequest.getStatus()==1){
+        if (userTopicBankAddRequest.getStatus() == 1) {
             //        TODO 用户答对加积分
         }
         boolean save = usertopicbankService.save(target);
@@ -213,5 +222,35 @@ public class TopicbankController {
         return ResultUtils.success(save);
     }
 
+    /**
+     * 查询通过的关卡
+     */
+    @GetMapping("/usertopic/getlevel")
+    public BaseResponse<List<Integer>> getlevel(Long userid) {
+        if (userid==0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<Integer> list = usertopicbankService.getlevelByUserid(userid);
+        return ResultUtils.success(list);
+    }
+
+
+    /**
+     * 根据关卡与用户id查询用户的答题情况
+     */
+
+    @GetMapping("/usertopic/getbycard")
+    public BaseResponse<List<TopicBankVo>> getLevelBycard(Long userid, Long level) {
+        if (userid==0 || level==0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        List<TopicBankVo> list = usertopicbankService.getTopicBankBlevel(userid, level);
+//        if (list!=null && list.size()>0){
+//
+
+//        }
+//         如果list是空说明没有闯关
+        return ResultUtils.success(list);
+    }
 
 }

@@ -44,6 +44,13 @@ public class Exchange implements Serializable {
      */
     private Date updatetime;
 
+    /**数量*/
+    private int number;
+    /**
+     * 上架状态 0-上架 1-下架
+     * */
+    private int statu;
+
     /**
      * 是否删除
      */

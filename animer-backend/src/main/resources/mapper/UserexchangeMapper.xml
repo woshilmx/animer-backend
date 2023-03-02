@@ -5,20 +5,54 @@
 <mapper namespace="com.lmx.project.mapper.UserexchangeMapper">
 
     <resultMap id="BaseResultMap" type="com.lmx.project.model.entity.Userexchange">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userid" column="userId" jdbcType="BIGINT"/>
-            <result property="goodsid" column="goodsId" jdbcType="BIGINT"/>
-            <result property="address" column="address" jdbcType="VARCHAR"/>
-            <result property="phone" column="phone" jdbcType="VARCHAR"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userid" column="userId" jdbcType="BIGINT"/>
+        <result property="goodsid" column="goodsId" jdbcType="BIGINT"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,userId,goodsId,
+        id
+        ,userId,goodsId,
         address,phone,status,
         createTime,updateTime,isDelete
     </sql>
+
+    <select id="selectExchangeVo" resultType="com.lmx.project.model.vo.ExchangeVo">
+
+        select exchange.id,
+        exchange.id,
+        exchange.name,
+        userExchange.address,
+        userExchange.phone,
+        userExchange.status
+
+
+        from exchange
+        join userExchange on exchange.id = userExchange.goodsId
+
+        <where>
+
+            <if test="userid!=0 and userid!=null">
+                and userExchange.userId=#{userid}
+            </if>
+
+            <if test="goodsid!=0 and goodsid!=null ">
+                and userExchange.goodsId=#{goodsid}
+            </if>
+
+
+
+            <if test="status!=0 and status!=null">
+                and userExchange.status=#{status}
+            </if>
+        </where>
+
+
+    </select>
 </mapper>

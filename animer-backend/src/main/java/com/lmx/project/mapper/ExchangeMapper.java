@@ -2,6 +2,7 @@ package com.lmx.project.mapper;
 
 import com.lmx.project.model.entity.Exchange;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author Lenovo
@@ -9,8 +10,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2023-02-28 23:36:08
 * @Entity com.lmx.project.model.entity.Exchange
 */
+@Mapper
 public interface ExchangeMapper extends BaseMapper<Exchange> {
 
+    int reduce(Long id);
 }
 
 

@@ -1,11 +1,16 @@
 package com.lmx.project.service;
 
+import com.lmx.project.mapper.UsertopicbankMapper;
+import com.lmx.project.model.dto.exchange.UserexchangeQueryRequest;
 import com.lmx.project.model.entity.User;
+import com.lmx.project.until.FileUntil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.net.UnknownHostException;
+import java.util.UUID;
 
 /**
  * 用户服务测试
@@ -17,13 +22,40 @@ class UserServiceTest {
 
     @Resource
     private UserService userService;
+    @Resource
+    private UsertopicbankMapper usertopicbankMapper;
+
+    @Resource
+    private FileUntil fileUntil;
+
+    @Resource
+    private UserexchangeService userexchangeService;
+
+    @Test
+    public void asfadf() throws UnknownHostException {
+//        usertopicbankMapper.selectTopicBankByUserIdAndLevel(1L, 2L);
+        System.out.println(fileUntil.getIpaddress());
+    }
+
+    @Test
+    public void asfadf33() {
+        UserexchangeQueryRequest userexchangeQueryRequest = new UserexchangeQueryRequest();
+        userexchangeQueryRequest.setUserid(1L);
+        userexchangeQueryRequest.setGoodsid(2L);
+        System.out.println(userexchangeService.getAllExchange(userexchangeQueryRequest));
+    }
 
     @Test
     void testAddUser() {
-        User user = new User();
-        boolean result = userService.save(user);
-        System.out.println(user.getId());
-        Assertions.assertTrue(result);
+        String filename = "121212.jpg";
+        String substring = filename.substring(filename.lastIndexOf("."), filename.length());
+
+        String s = UUID.randomUUID().toString();
+        String replace = s.replace("-", "");
+
+        String resultfilename = replace + substring;
+        System.out.println(resultfilename);
+
     }
 
     @Test

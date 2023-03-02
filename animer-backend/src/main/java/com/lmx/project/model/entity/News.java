@@ -42,7 +42,7 @@ public class News implements Serializable {
     private String coverimg;
 
     /**
-     * 新闻内容
+     * 所属单位
      */
     private String newscontent;
 

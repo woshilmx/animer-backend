@@ -10,4 +10,5 @@ import com.lmx.project.model.entity.Exchange;
 */
 public interface ExchangeService extends IService<Exchange> {
 
+    void reduceNumber(Long id);
 }

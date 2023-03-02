@@ -5,18 +5,25 @@
 <mapper namespace="com.lmx.project.mapper.ExchangeMapper">
 
     <resultMap id="BaseResultMap" type="com.lmx.project.model.entity.Exchange">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="requiredscore" column="requiredScore" jdbcType="INTEGER"/>
-            <result property="picture" column="picture" jdbcType="VARCHAR"/>
-            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="requiredscore" column="requiredScore" jdbcType="INTEGER"/>
+        <result property="picture" column="picture" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
+        <result property="number" column="number" jdbcType="INTEGER"/>
+        <result property="statu" column="statu" jdbcType="INTEGER"/>
+
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,requiredScore,
+        id
+        ,name,requiredScore,
         picture,createTime,updateTime,
         isDelete
     </sql>
+    <update id="reduce">
+        update exchange set number=number-1 where id=#{id}
+    </update>
 </mapper>

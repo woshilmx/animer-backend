@@ -25,10 +25,14 @@ public class Topicbank implements Serializable {
     private Integer type;
 
     /**
-     * 答案
+     * 正确答案
      */
     private String answer;
 
+    /**
+    * 题目
+    * */
+    private String question;
     /**
      * 解析
      */

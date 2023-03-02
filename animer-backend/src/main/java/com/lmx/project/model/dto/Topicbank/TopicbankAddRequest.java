@@ -28,6 +28,11 @@ public class TopicbankAddRequest {
     private String analysis;
 
     /**
+     * 题目
+     * */
+    private String question;
+
+    /**
      * 所属关卡
      */
     private Integer belonglevel;

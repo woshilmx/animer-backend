@@ -25,6 +25,11 @@ public class TopicbankUpdateRequest {
      */
     private String answer;
 
+
+    /**
+     * 题目
+     * */
+    private String question;
     /**
      * 解析
      */

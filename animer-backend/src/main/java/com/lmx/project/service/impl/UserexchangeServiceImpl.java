@@ -2,10 +2,16 @@ package com.lmx.project.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lmx.project.mapper.UserexchangeMapper;
+import com.lmx.project.model.dto.exchange.UserexchangeQueryRequest;
 import com.lmx.project.model.entity.Userexchange;
+import com.lmx.project.model.vo.ExchangeVo;
 import com.lmx.project.service.UserexchangeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
 * @author Lenovo
@@ -17,6 +23,25 @@ import org.springframework.stereotype.Service;
 public class UserexchangeServiceImpl extends ServiceImpl<UserexchangeMapper, Userexchange>
     implements UserexchangeService{
 
+
+    @Resource
+    private UserexchangeMapper userexchangeMapper;
+
+
+    @Override
+    public List<ExchangeVo> getAllExchange(UserexchangeQueryRequest userexchangeQueryRequest) {
+
+
+
+
+       return userexchangeMapper.selectExchangeVo(userexchangeQueryRequest);
+
+
+
+
+
+
+    }
 }
 
 

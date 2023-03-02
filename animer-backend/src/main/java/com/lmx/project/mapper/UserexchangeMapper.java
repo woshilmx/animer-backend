@@ -1,7 +1,11 @@
 package com.lmx.project.mapper;
 
+import com.lmx.project.model.dto.exchange.UserexchangeQueryRequest;
 import com.lmx.project.model.entity.Userexchange;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lmx.project.model.vo.ExchangeVo;
+
+import java.util.List;
 
 /**
 * @author Lenovo
@@ -11,6 +15,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface UserexchangeMapper extends BaseMapper<Userexchange> {
 
+
+    List<ExchangeVo> selectExchangeVo(UserexchangeQueryRequest userexchangeQueryRequest);
 }
 
 
