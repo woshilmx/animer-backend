@@ -27,15 +27,11 @@ public class DocumentAddRequest implements Serializable {
      */
     private Long animalid;
 
-    /**
-     * 文献url
-     */
-    private String url;
 
     /**
-     * 发布时间
+     * 发布时间 2023-03-10
      */
-    private Date publishtime;
+    private String publishtime;
 
     /**
      * 作者

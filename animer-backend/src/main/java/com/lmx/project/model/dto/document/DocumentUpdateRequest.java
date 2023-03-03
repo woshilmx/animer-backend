@@ -29,15 +29,12 @@ public class DocumentUpdateRequest implements Serializable {
      */
     private Long animalid;
 
-    /**
-     * 文献url
-     */
-    private String url;
+
 
     /**
      * 发布时间
      */
-    private Date publishtime;
+    private String publishtime;
 
     /**
      * 作者

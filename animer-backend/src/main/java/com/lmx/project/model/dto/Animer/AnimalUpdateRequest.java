@@ -36,10 +36,10 @@ public class AnimalUpdateRequest implements Serializable {
      */
     private String introduction;
 
-    /**
-     * 图片
-     */
-    private String picture;
+//    /**
+//     * 图片
+//     */
+//    private String picture;
 
     /**
      * 濒危等级
@@ -66,10 +66,10 @@ public class AnimalUpdateRequest implements Serializable {
      */
     private String distributionrange;
 
-    /**
-     * 各界报道
-     */
-    private String report;
+//    /**
+//     * 各界报道
+//     */
+//    private String report;
 /**
 * 图片
 * */

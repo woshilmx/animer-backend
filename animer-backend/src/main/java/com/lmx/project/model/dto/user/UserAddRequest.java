@@ -1,8 +1,13 @@
 package com.lmx.project.model.dto.user;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户创建请求
@@ -12,35 +17,39 @@ import java.io.Serializable;
 @Data
 public class UserAddRequest implements Serializable {
 
-    /**
-     * 用户昵称
-     */
-    private String userName;
+
 
     /**
-     * 账号
+     * 昵称
      */
-    private String userAccount;
+    private String nickname;
 
     /**
-     * 用户头像
+     * 头像
      */
-    private String userAvatar;
+    private String avatar;
 
     /**
-     * 性别
+     * 邮箱
      */
-    private Integer gender;
-
-    /**
-     * 用户角色: user, admin
-     */
-    private String userRole;
+    private String email;
 
     /**
      * 密码
      */
-    private String userPassword;
+    private String password;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * openid
+     * */
+    private String openid;
+
+    /**
+     * 图片增加的文件
+     * */
+    private MultipartFile addAvatarFile;
+
+
+
+
 }

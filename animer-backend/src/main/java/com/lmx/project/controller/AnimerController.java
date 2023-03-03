@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +63,7 @@ public class AnimerController {
         if (animalAddRequest.getHabit() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "动物习惯不能为空");
         }
-        if (animalAddRequest.getCategoryid()!=null && animalAddRequest.getCategoryid() == 0) {
+        if (animalAddRequest.getCategoryid() != null && animalAddRequest.getCategoryid() == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "分类不能为空");
 
         }
@@ -165,13 +166,16 @@ public class AnimerController {
      * 根据id查询动物信息
      */
     @GetMapping()
-    public BaseResponse<Animal> getOneById(@RequestParam Long id) {
+    public BaseResponse<Animal> getOneById(@RequestParam Long id) throws UnknownHostException {
 
         if (id == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         Animal byId = animalService.getById(id);
 
+        if (byId!=null){
+            byId.setPicture(fileUntil.getIpaddress()+byId.getPicture());;
+        }
         return ResultUtils.success(byId);
     }
 
@@ -180,7 +184,7 @@ public class AnimerController {
      * 分页查询动物信息
      */
     @PostMapping("list")
-    public BaseResponse<IPage<Animal>> getOneById(@RequestBody AnimalQueryRequest animalQueryRequest) {
+    public BaseResponse<IPage<Animal>> getAnimelList(@RequestBody AnimalQueryRequest animalQueryRequest) {
 
         if (animalQueryRequest.getCurrent() == 0 || animalQueryRequest.getPageSize() == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "分页信息错误");
@@ -196,7 +200,7 @@ public class AnimerController {
         if (StringUtils.isNotBlank(animalQueryRequest.getHabit())) {
             animalLambdaQueryWrapper.like(Animal::getHabit, animalQueryRequest.getHabit());
         }
-        if (animalQueryRequest.getCategoryid() !=null && animalQueryRequest.getCategoryid() != 0) {
+        if (animalQueryRequest.getCategoryid() != null && animalQueryRequest.getCategoryid() != 0) {
             animalLambdaQueryWrapper.eq(Animal::getCategoryid, animalQueryRequest.getCategoryid());
 
         }
@@ -228,6 +232,20 @@ public class AnimerController {
 
         IPage<Animal> page = animalService.page(new Page<>(animalQueryRequest.getCurrent(), animalQueryRequest.getPageSize()), animalLambdaQueryWrapper);
 
+
+        List<Animal> records = page.getRecords();
+
+
+        records.stream().forEach(item -> {
+            try {
+                if (item!=null){
+                    item.setPicture(fileUntil.getIpaddress() + item.getPicture());
+                }
+
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        });
         return ResultUtils.success(page);
     }
 

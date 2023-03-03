@@ -1,9 +1,14 @@
 package com.lmx.project.model.dto.user;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用户更新请求
@@ -13,40 +18,43 @@ import java.io.Serializable;
 @Data
 public class UserUpdateRequest implements Serializable {
     /**
-     * id
+     * 用户ID
      */
+
     private Long id;
 
     /**
-     * 用户昵称
+     * 昵称
      */
-    private String userName;
+    private String nickname;
 
     /**
-     * 账号
-     */
-    private String userAccount;
+     * openid
+     * */
+    private String openid;
 
     /**
-     * 用户头像
+     * 头像
      */
-    private String userAvatar;
+    private String avatar;
 
     /**
-     * 性别
+     * 邮箱
      */
-    private Integer gender;
-
-    /**
-     * 用户角色: user, admin
-     */
-    private String userRole;
+    private String email;
 
     /**
      * 密码
      */
-    private String userPassword;
+    private String password;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 积分
+     */
+    private Integer integral;
+
+    /**
+    * 图片更新的文件
+    * */
+    private MultipartFile updateAvatarFile;
 }

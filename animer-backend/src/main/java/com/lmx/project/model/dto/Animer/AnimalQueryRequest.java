@@ -62,10 +62,10 @@ public class AnimalQueryRequest extends PageRequest implements Serializable {
      */
     private String distributionrange;
 
-    /**
-     * 各界报道
-     */
-    private String report;
+//    /**
+//     * 各界报道
+//     */
+//    private String report;
 
 
 }

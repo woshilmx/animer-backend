@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 文献表
@@ -37,6 +38,7 @@ public class Document implements Serializable {
     /**
      * 发布时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishtime;
 
     /**

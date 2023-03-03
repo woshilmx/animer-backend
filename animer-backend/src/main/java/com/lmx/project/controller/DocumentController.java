@@ -23,6 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,7 +49,7 @@ public class DocumentController {
      */
 
     @PostMapping
-    public BaseResponse<Boolean> addDocument(DocumentAddRequest documentAddRequest) throws IOException {
+    public BaseResponse<Boolean> addDocument(DocumentAddRequest documentAddRequest) throws IOException, ParseException {
         if (documentAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -62,8 +66,16 @@ public class DocumentController {
         }
 
 
+
+
         Document document = new Document();
         BeanUtils.copyProperties(documentAddRequest, document);
+
+        if (documentAddRequest.getPublishtime()!=null){
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = format.parse(documentAddRequest.getPublishtime().toString());
+            document.setPublishtime(date);
+        }
         if (documentAddRequest.getDocumentfile() != null) {
             MultipartFile documentfile = documentAddRequest.getDocumentfile();
             String originalFilename = documentfile.getOriginalFilename();
@@ -73,9 +85,9 @@ public class DocumentController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename);
+            boolean b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename+substring);
             if (b) {
-                document.setUrl(documentdir + resultfilename);
+                document.setUrl(documentdir + resultfilename+substring);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -92,7 +104,7 @@ public class DocumentController {
      * 修改文献信息
      */
     @PostMapping("update")
-    public BaseResponse<Boolean> updateDocument(DocumentUpdateRequest documentUpdateRequest) throws IOException {
+    public BaseResponse<Boolean> updateDocument(DocumentUpdateRequest documentUpdateRequest) throws IOException, ParseException {
 
         if (documentUpdateRequest == null || documentUpdateRequest.getId() == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "必须有id属性");
@@ -108,12 +120,18 @@ public class DocumentController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename);
+            boolean b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename+substring);
             if (b) {
-                document.setUrl(documentdir + resultfilename);
+                document.setUrl(documentdir + resultfilename+substring);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
+        }
+
+        if (documentUpdateRequest.getPublishtime()!=null){
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = format.parse(documentUpdateRequest.getPublishtime().toString());
+            document.setPublishtime(date);
         }
         boolean b = documentService.updateById(document);
 
@@ -188,6 +206,17 @@ public class DocumentController {
 //        QueryWrapper<Document> queryWrapper = new QueryWrapper<>(target);
         Page<Document> page = documentService.page(new Page<>(documentQueryRequest.getCurrent(), documentQueryRequest.getPageSize()),
                 documentLambdaQueryWrapper);
+        List<Document> records = page.getRecords();
+
+        records.stream().forEach(item->{
+            try {
+                item.setUrl(fileUntil.getIpaddress()+item.getUrl());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        });
+
+        page.setRecords(records);
         return ResultUtils.success(page);
     }
 

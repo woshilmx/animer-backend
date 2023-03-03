@@ -1,5 +1,8 @@
 package com.lmx.project.model.dto.user;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.lmx.project.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,44 +19,36 @@ import java.util.Date;
 @Data
 public class UserQueryRequest extends PageRequest implements Serializable {
     /**
-     * id
+     * 用户ID
      */
+
     private Long id;
 
     /**
-     * 用户昵称
+     * 昵称
      */
-    private String userName;
+    private String nickname;
 
     /**
-     * 账号
-     */
-    private String userAccount;
+     * openid
+     * */
+    private String openid;
+
+
 
     /**
-     * 用户头像
+     * 邮箱
      */
-    private String userAvatar;
+    private String email;
+
+
 
     /**
-     * 性别
+     * 积分
      */
-    private Integer gender;
+    private Integer integral;
 
-    /**
-     * 用户角色: user, admin
-     */
-    private String userRole;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 }
