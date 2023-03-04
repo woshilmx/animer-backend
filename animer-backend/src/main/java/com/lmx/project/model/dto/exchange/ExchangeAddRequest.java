@@ -27,10 +27,10 @@ public class ExchangeAddRequest implements Serializable {
      */
     private Integer requiredscore;
 
-    /**
-     * 图片
-     */
-    private String picture;
+//    /**
+//     * 图片
+//     */
+//    private String picture;
 
     /**
      * 商品图片的文件
@@ -38,9 +38,9 @@ public class ExchangeAddRequest implements Serializable {
     private MultipartFile exchangefile;
     /**数量*/
     private int number;
-    /**
-     * 上架状态 0-上架 1-下架
-     * */
-    private int statu;
+//    /**
+//     * 上架状态 0-上架 1-下架
+//     * */
+//    private int statu;
 
 }

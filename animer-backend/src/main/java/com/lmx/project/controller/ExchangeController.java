@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -89,9 +90,9 @@ public class ExchangeController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename);
+            boolean b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
             if (b) {
-                exchange.setPicture(exchangedir + resultfilename);
+                exchange.setPicture(exchangedir + resultfilename + substring);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -124,9 +125,9 @@ public class ExchangeController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename);
+            boolean b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
             if (b) {
-                exchange.setPicture(exchangedir + resultfilename);
+                exchange.setPicture(exchangedir + resultfilename + substring);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -176,10 +177,20 @@ public class ExchangeController {
     /**
      * 分页查询商品信息,商品数量不多
      */
-
     @PostMapping("list")
-    public BaseResponse<List<Exchange>> getDocumentlist() {
-        List<Exchange> list = exchangeService.list();
+    public BaseResponse<List<Exchange>> getExchage() {
+        LambdaQueryWrapper<Exchange> queryWrapper = new LambdaQueryWrapper<>();
+//        0是上架状态
+        queryWrapper.eq(Exchange::getStatu, 0);
+        List<Exchange> list = exchangeService.list(queryWrapper);
+
+        list.stream().forEach(item -> {
+            try {
+                item.setPicture(fileUntil.getIpaddress() + item.getPicture());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        });
         return ResultUtils.success(list);
     }
 

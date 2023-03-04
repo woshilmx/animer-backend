@@ -29,6 +29,12 @@ public class TopicBankVo {
     private String analysis;
 
     /**
+    * 问题
+    * */
+
+    private String question;
+
+    /**
      * 所属关卡
      */
     private Integer belonglevel;

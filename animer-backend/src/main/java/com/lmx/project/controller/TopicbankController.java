@@ -205,7 +205,7 @@ public class TopicbankController {
         }
         //           TODO 根据用户id 查询该用户是否存在
 //        查询题目是否存在
-        Usertopicbank byId = usertopicbankService.getById(userTopicBankAddRequest.getQuestionid());
+        Topicbank byId = topicbankService.getById(userTopicBankAddRequest.getQuestionid());
         if (byId == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "题目不存在");
         }

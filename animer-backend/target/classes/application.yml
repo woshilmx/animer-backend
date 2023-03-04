@@ -39,3 +39,11 @@ mybatis-plus:
 
 file:
   pre: E:\javaProject2023\ead\files\
+
+#
+#
+#  http://127.0.0.1/api/document?id=1;
+
+
+
+

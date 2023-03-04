@@ -25,7 +25,7 @@
         select belongLevel
         from topicbank
                  join userTopicbank t on t.questionId = topicbank.id
-        where t.userId = #{userid} and isDelete=0;
+        where t.userId = #{userid} and topicbank.isDelete=0;
 
     </select>
 
@@ -35,7 +35,8 @@
                topicbank.type,
                topicbank.answer,
                topicbank.analysis,
-               topicbank.belongLevel
+               topicbank.belongLevel,
+               topicbank.question
         from topicbank
                  join userTopicbank t on t.questionId = topicbank.id
         where t.userId = #{userid}

@@ -277,10 +277,10 @@ user
 (
     `id`          bigint not null comment '新闻编号',
     `name`        varchar(255) comment '新闻名称',
-    `content`     text comment '内容',
+    `content`     text comment '新闻url',
     `releaseTime` datetime comment '发布时间',
     `coverImg`    varchar(1024) comment '封面图片',
-    `newsContent` text comment '新闻内容',
+    `newsContent` text comment '所属单位',
     primary key (`id`),
     createTime    timestamp default CURRENT_TIMESTAMP comment '创建时间',
     updateTime    timestamp default CURRENT_TIMESTAMP comment '更新时间',

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,17 +32,20 @@ public class NewsAddRequest implements Serializable {
     /**
      * 发布时间
      */
-    private Date releasetime;
+    private String releasetime;
 
-    /**
-     * 封面图片
-     */
-    private String coverimg;
+//    /**
+//     * 封面图片
+//     */
+//    private String coverimg;
 
     /**
      * 新闻内容
      */
     private String newscontent;
 
-
+    /**
+    * 封面图片
+    * */
+    private MultipartFile coverFile;
 }
