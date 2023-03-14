@@ -20,13 +20,14 @@
   
      - post请求
   
-     - username/openid
+     - 接受数据
   
-     - password
+       - cusername/openid
+       - password
   
      - 返回数据
   
-       - 数据库中传递的数据
+       - 用户信息
   
        ~~~js
        wx.request({
@@ -77,49 +78,48 @@
   
   - 用户积分管理
   
+  - 论坛功能
+  
+     - 评论
+     - 点赞
+     - 发布
+  
 - 支付TODO
+
+   - 
 
 - 知识闯关
   - 题目的管理
-  - 请求方式post
-  - 请求参数
-
-  ~~~java
-    /**
-       * 类型
-       */
-      private Integer type;
-  
-      /**
-       * 答案
-       */
-      private String answer;
-  
-      /**
-       * 解析
-       */
-      private String analysis;
-  
-      /**
-       * 所属关卡
-       */
-      private Integer belonglevel;
-  ~~~
-
+    - 增删改查
   - 用户闯关进度管理
     - 答题情况增删改查
     - 答题加积分
-
+  
 - 濒危动物信息管理
   - 增删改查
   	
    - 不同类别
   
-  	- 有关濒危动物的新闻管理
+   - 有关濒危动物的新闻管理
 
-- 关键词资料查询
+   - 关键词资料查询
 
-- 商品兑换的
+- 检测模块（一级）
+  
+  - 动物识别 √
+  - 相似图片搜索
+  
+- 聚合搜索（二级）
+  - 搜索文章
+  - 搜索新闻
+  - 搜索动物信息
+  - 搜索文献
+  
+- 根据分布地域查询动物信息 顺带
+
+- 论坛系统 
+
+   - 
 
 ## 数据库表
 
@@ -205,155 +205,115 @@
   - 用户id
   - 商品id
   - 地址
-  - 邮寄状态 status 0——未邮寄 1——邮寄4
+  - 邮寄状态 status 0——未邮寄 1——邮寄
+- 帖子表
+  	- id
+  	- 题目
+  	- 用户id
+  	- 内容
+  	- 点赞数
+  	- 状态 1——发布 2——草稿 
+  	- 创建时间
+  - 更新时间
+  - 是否删除
+- 评论表
+  - id
+  - 用户id
+  - 帖子id
+  - 评论内容
+  - 创建时间
+  - 更新时间
+  - 是否删除
+- 点赞表
+  - id
+  - 用户id
+  - 帖子id
+  - 创建时间
+  - 更新时间
+  - 是否删除
 
-### 数据库字段设计
+## 项目成员
 
-~~~sql
-用户表
-user
-(
-    id         bigint primary key auto_increment comment '用户ID',
-    nickName   varchar(255) comment '昵称',
-    avatar     varchar(1024) comment '头像',
-    email      varchar(255) comment '邮箱',
-    password   varchar(255) comment '密码',
-    integral   int comment '积分',
-    createTime timestamp default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime timestamp default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete   int       default 0 comment '是否删除'
-);
-题库
+#### 指导老师
 
-`topicbank`
-(
-    `id`          bigint       NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `type`        int(1)       NOT NULL COMMENT '类型',
-    `answer`      varchar(255) NOT NULL COMMENT '答案',
-    `analysis`    text COMMENT '解析',
-    `belongLevel` int(10)      NOT NULL COMMENT '所属关卡',
-    createTime    timestamp default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime    timestamp default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete      int       default 0 comment '是否删除',
-    PRIMARY KEY (`id`)
-)
+- 杨潞霞老师
 
+#### 小程序端技术支持
 
-用户题库表
-`userTopicbank`
-(
-    `id`         bigint     NOT NULL AUTO_INCREMENT COMMENT 'ID',
-    `userId`     bigint     NOT NULL COMMENT '用户ID',
-    `questionId` bigint     NOT NULL COMMENT '题目ID',
-    `status`     tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态：0-错误 1-正确',
-    createTime   timestamp           default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime   timestamp           default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete     int                 default 0 comment '是否删除',
-    PRIMARY KEY (`id`)
-) 
+- 前端：靳博宇
+- 后端：李满祥、郭芹
 
+#### PC端技术支持
 
-动物
-`animal`
-(
-    `id`                      bigint        NOT NULL COMMENT '动物编号',
-    `name`                    varchar(50)   NOT NULL COMMENT '动物名称',
-    `categoryId`              bigint        NOT NULL COMMENT '分类编号',
-    `introduction`            varchar(1024) NOT NULL COMMENT '动物简介',
-    `picture`                 varchar(1024) NOT NULL COMMENT '图片',
-    `endangeredLevel`         varchar(255)  NOT NULL COMMENT '濒危等级',
-    `morphologyDescription`   varchar(1024) NOT NULL COMMENT '形态描述',
-    `habit`                   varchar(1024) NOT NULL COMMENT '生活习性',
-    `geographicalEnvironment` varchar(255)  NOT NULL COMMENT '生活地理环境',
-    `distributionRange`       varchar(1024) NOT NULL COMMENT '分布范围',
-    `report`                  varchar(1024) NOT NULL COMMENT '各界报道',
-    createTime                timestamp default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime                timestamp default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete                  int       default 0 comment '是否删除'
-) 
+- 前端：谭松林，苗文慧
+- 后端：李满祥、郭芹
 
-新闻
-`news`
-(
-    `id`          bigint not null comment '新闻编号',
-    `name`        varchar(255) comment '新闻名称',
-    `content`     text comment '新闻url',
-    `releaseTime` datetime comment '发布时间',
-    `coverImg`    varchar(1024) comment '封面图片',
-    `newsContent` text comment '所属单位',
-    primary key (`id`),
-    createTime    timestamp default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime    timestamp default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete      int       default 0 comment '是否删除'
-) 
+#### UI设计
 
+- 张瑞恒
 
-文献
-`document`
-(
-    `id`          bigint NOT NULL AUTO_INCREMENT COMMENT '文献id',
-    `title`       varchar(255)  DEFAULT NULL COMMENT '标题',
-    `animalId`    bigint        DEFAULT NULL COMMENT '动物id',
-    `url`         varchar(1024) DEFAULT NULL COMMENT '文献url',
-    `publishTime` datetime      DEFAULT NULL COMMENT '发布时间',
-    `author`      varchar(255)  DEFAULT NULL COMMENT '作者',
-    `periodical`  varchar(255)  DEFAULT NULL COMMENT '期刊',
-    createTime    timestamp     default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime    timestamp     default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete      int           default 0 comment '是否删除',
-    PRIMARY KEY (`id`)
-) 
+#### 资料库收集
 
-支付记录
-`payRecord`
-(
-    `id`        bigint      NOT NULL AUTO_INCREMENT COMMENT '主键id',
-    `userId`    bigint      NOT NULL COMMENT '用户id',
-    `payNum`    varchar(50) NOT NULL COMMENT '支付编号',
-    `payAmount` numeric     NOT NULL COMMENT '支付金额',
-    createTime  timestamp default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime  timestamp default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete    int       default 0 comment '是否删除',
-    PRIMARY KEY (`id`)
-)
+- 陈畅
+- 许仕祺
+
+#### 公众号运营组
+
+- 陈畅
+- 许仕祺
+- 苏王杰
+- 解浩杰
+
+#### 文档PPT资料撰写
+
+- 张蕾、彭士云
+
+#### 各比赛参赛成员
+
+- 互联网+
+
+  靳博宇、李满祥、张瑞恒、陈畅、许仕祺、郭芹、苗文慧、谭松林、苏王杰、解浩杰、张蕾、彭士云、张长青、刘超超、文进
+
+- 挑战杯
+
+  靳博宇、李满祥、张瑞恒、陈畅、许仕祺、三位待定
+
+- 计算机设计大赛
+
+  靳博宇、李满祥、张瑞恒
+
+## 优势点
+
+- 公益
+- 双端系统
+- 动物保护
 
 
 
-兑换商品
-`exchange`
-(
-    `id`            bigint        NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `name`          varchar(255)  NOT NULL COMMENT '名称',
-    `requiredScore` int(11)       NOT NULL COMMENT '所需积分',
-    `picture`       varchar(1024) NOT NULL COMMENT '图片',
-    createTime      timestamp default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime      timestamp default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete        int       default 0 comment '是否删除',
-    PRIMARY KEY (`id`)
-) 
+### 时间安排
 
+- 17号前端页面开始
+- 24号前后端页面完成
+- 25号开始联调
 
-用户-兑换表
-`userExchange`
-(
-    `id`       bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-    `userId`   bigint unsigned NOT NULL COMMENT '用户id',
-    `goodsId`  bigint unsigned NOT NULL COMMENT '商品id',
-    `address`  varchar(255)    NOT NULL COMMENT '地址',
-    phone      varchar(20)     not null comment '电话',
-    `status`   tinyint(4)      NOT NULL DEFAULT '0' COMMENT '邮寄状态 0——未邮寄 1——邮寄',
-    createTime timestamp                default CURRENT_TIMESTAMP comment '创建时间',
-    updateTime timestamp                default CURRENT_TIMESTAMP comment '更新时间',
-    isDelete   int                      default 0 comment '是否删除',
-    PRIMARY KEY (`id`)
-) 
-~~~
+2023.2.14
+
+- 完成 动物识别接口的开发√
+- 将服务器存储修改为七牛云存储√
+- 确定使用wangeditor作为论坛的编辑器√
+- 完成论坛功能后端接口
+  - 增加帖子√
+  - 删除帖子√
+  - 更新帖子√
+  - 多条件查询帖子√
+  - 增加点赞√
+  - 减少点赞√
+- **未完成的功能**
+  - 评论的增删改查
+  - 写帖子的过程中图片的上传
+  - 支付的接入
 
 
 
-## 测试
 
-- 用户功能测试完成
-- 动物功能测试完成
-- 后续将服务器的ip地址添加到yml文件中
 
