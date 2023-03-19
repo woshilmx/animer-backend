@@ -21,6 +21,7 @@ import com.lmx.project.model.vo.ExchangeVo;
 import com.lmx.project.service.ExchangeService;
 import com.lmx.project.service.UserexchangeService;
 import com.lmx.project.until.FileUntil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/exchange")
 @Slf4j
+@Api("商品模块")
 public class ExchangeController {
 
 
@@ -90,9 +92,9 @@ public class ExchangeController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
-            if (b) {
-                exchange.setPicture(exchangedir + resultfilename + substring);
+            String b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
+            if (b!=null) {
+                exchange.setPicture(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -125,9 +127,9 @@ public class ExchangeController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
-            if (b) {
-                exchange.setPicture(exchangedir + resultfilename + substring);
+            String b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
+            if (b!=null) {
+                exchange.setPicture(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -169,8 +171,8 @@ public class ExchangeController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "id不能为0或空");
         }
         Exchange byId = exchangeService.getById(id);
-        String ipaddress = fileUntil.getIpaddress();
-        byId.setPicture(ipaddress + byId.getPicture());
+//        String ipaddress = fileUntil.getIpaddress();
+//        byId.setPicture(ipaddress + byId.getPicture());
         return ResultUtils.success(byId);
     }
 
@@ -184,13 +186,13 @@ public class ExchangeController {
         queryWrapper.eq(Exchange::getStatu, 0);
         List<Exchange> list = exchangeService.list(queryWrapper);
 
-        list.stream().forEach(item -> {
-            try {
-                item.setPicture(fileUntil.getIpaddress() + item.getPicture());
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-        });
+//        list.stream().forEach(item -> {
+//            try {
+//                item.setPicture(fileUntil.getIpaddress() + item.getPicture());
+//            } catch (UnknownHostException e) {
+//                e.printStackTrace();
+//            }
+//        });
         return ResultUtils.success(list);
     }
 

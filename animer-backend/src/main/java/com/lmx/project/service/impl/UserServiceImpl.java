@@ -58,23 +58,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = new User();
         BeanUtils.copyProperties(userAddRequest, user);
 
+        if (userAddRequest.getAddAvatarFile() != null) {
+            MultipartFile addAvatarFile = userAddRequest.getAddAvatarFile();
 
-        MultipartFile addAvatarFile = userAddRequest.getAddAvatarFile();
 
-
-        String originalFilename = addAvatarFile.getOriginalFilename();
+            String originalFilename = addAvatarFile.getOriginalFilename();
 //            后缀名
-        String substring = originalFilename.substring(originalFilename.lastIndexOf("."), originalFilename.length());
+            String substring = originalFilename.substring(originalFilename.lastIndexOf("."), originalFilename.length());
 
-        String resultfilename = UUID.randomUUID().toString().replace("-", "");
+            String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-        boolean b = fileUntil.saveFile(addAvatarFile.getInputStream(), userdir + resultfilename+substring);
-        if (b) {
-            user.setAvatar(userdir + resultfilename+substring);
-        } else {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
+            String b = fileUntil.saveFile(addAvatarFile.getInputStream(), userdir + resultfilename + substring);
+            if (b!=null) {
+                user.setAvatar(b);
+            } else {
+                throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
+            }
         }
+
 //        设置积分为零
 
         String password = user.getPassword();

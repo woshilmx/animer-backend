@@ -14,6 +14,8 @@ import com.lmx.project.model.dto.news.NewsUpdateRequest;
 import com.lmx.project.model.entity.News;
 import com.lmx.project.service.NewsService;
 import com.lmx.project.until.FileUntil;
+import com.lmx.project.until.PaChongUntil;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/news")
+@Api("新闻模块")
 public class NewsController {
 
     @Resource
@@ -37,6 +40,9 @@ public class NewsController {
 
     @Resource
     private FileUntil fileUntil;
+
+    @Resource
+    private PaChongUntil paChongUntil;
 
 
     private String newsDir = "news/";
@@ -79,9 +85,9 @@ public class NewsController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(newsAddRequestCoverFile.getInputStream(), newsDir + resultfilename + substring);
-            if (b) {
-                target.setCoverimg(newsDir + resultfilename + substring);
+            String b = fileUntil.saveFile(newsAddRequestCoverFile.getInputStream(), newsDir + resultfilename + substring);
+            if (b!=null) {
+                target.setCoverimg(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -137,9 +143,9 @@ public class NewsController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(newsAddRequestCoverFile.getInputStream(), newsDir + resultfilename + substring);
-            if (b) {
-                target.setCoverimg(newsDir + resultfilename + substring);
+            String b = fileUntil.saveFile(newsAddRequestCoverFile.getInputStream(), newsDir + resultfilename + substring);
+            if (b!=null) {
+                target.setCoverimg(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -167,7 +173,7 @@ public class NewsController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         News save = newsService.getById(id);
-        save.setCoverimg(fileUntil.getIpaddress()+save.getCoverimg());
+//        save.setCoverimg(fileUntil.getIpaddress()+save.getCoverimg());
         return ResultUtils.success(save);
     }
 
@@ -203,18 +209,36 @@ public class NewsController {
 
         IPage<News> newsPage = new Page<>(newsQueryRequest.getCurrent(), newsQueryRequest.getPageSize());
         IPage<News> page = newsService.page(newsPage, lambdaQueryWrapper);
-        List<News> records = page.getRecords();
-        records.stream().forEach(item->{
-            try {
-                item.setCoverimg(fileUntil.getIpaddress()+item.getCoverimg());
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-        });
-
-        page.setRecords(records);
+//        List<News> records = page.getRecords();
+//        records.stream().forEach(item->{
+//            try {
+//                item.setCoverimg(fileUntil.getIpaddress()+item.getCoverimg());
+//            } catch (UnknownHostException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        page.setRecords(records);
 
         return ResultUtils.success(page);
+    }
+
+    /**
+    * 从央视网获取新闻
+    * */
+    @GetMapping("network")
+    public BaseResponse<List<News>> getNewsByYagnShi(String searchtext,int page) throws ParseException, IOException {
+
+        if (searchtext==null){
+           searchtext="濒危";
+
+        }
+        if (page==0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"页数不能为0");
+        }
+
+        List<News> news = paChongUntil.getnewsByNetwork(searchtext, page);
+        return ResultUtils.success(news);
     }
 
 }

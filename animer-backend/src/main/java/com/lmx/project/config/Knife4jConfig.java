@@ -27,6 +27,7 @@ public class Knife4jConfig {
                 .apiInfo(new ApiInfoBuilder()
                         .title("project-backend")
                         .description("project-backend")
+                        .title("ead项目后端")
                         .version("1.0")
                         .build())
                 .select()

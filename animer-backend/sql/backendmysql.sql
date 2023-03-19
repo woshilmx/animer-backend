@@ -146,7 +146,65 @@ CREATE TABLE `userExchange`
 
 
 
+use ead;
+CREATE TABLE `posts` (
+                         `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
+                         `title` varchar(255) NOT NULL COMMENT '帖子标题',
+                         `userId` int(11) NOT NULL COMMENT '发布者ID',
+                         `content` text NOT NULL COMMENT '帖子内容',
+                         `likeNum` int(11) NOT NULL DEFAULT '0' COMMENT '点赞数量',
+                         `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：1-已发布，2-草稿',
+                         createTime timestamp                default CURRENT_TIMESTAMP comment '创建时间',
+                         updateTime timestamp                default CURRENT_TIMESTAMP comment '更新时间',
+                         isDelete   int                      default 0 comment '是否删除',
+                         PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='帖子表';
 
+
+
+
+drop table posts;
+CREATE TABLE `posts`
+(
+    `id`       bigint       NOT NULL AUTO_INCREMENT COMMENT '帖子ID',
+    `title`    varchar(255) NOT NULL COMMENT '帖子标题',
+    `userId`   int(11)      NOT NULL COMMENT '发布者ID',
+    `content`  text         NOT NULL COMMENT '帖子内容',
+    `likeNum`  int(11)      NOT NULL DEFAULT '0' COMMENT '点赞数量',
+    `status`   tinyint(1)   NOT NULL DEFAULT '1' COMMENT '状态：1-已发布，2-草稿',
+    createTime timestamp             default CURRENT_TIMESTAMP comment '创建时间',
+    updateTime timestamp             default CURRENT_TIMESTAMP comment '更新时间',
+    isDelete   int                   default 0 comment '是否删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='帖子表';
+
+
+CREATE TABLE IF NOT EXISTS `comment`
+(
+    `id`       bigint NOT NULL AUTO_INCREMENT COMMENT '评论表id',
+    `user_id`  bigint NOT NULL COMMENT '用户id',
+    `post_id`  bigint NOT NULL COMMENT '帖子id',
+    `content`  text      DEFAULT NULL COMMENT '评论内容',
+    createTime timestamp default CURRENT_TIMESTAMP comment '创建时间',
+    updateTime timestamp default CURRENT_TIMESTAMP comment '更新时间',
+    isDelete   int       default 0 comment '是否删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='评论表';
+
+
+CREATE TABLE `liketable`
+(
+    `id`       bigint NOT NULL AUTO_INCREMENT COMMENT '点赞ID',
+    `userId`   bigint NOT NULL COMMENT '用户ID',
+    `postId`   bigint NOT NULL COMMENT '帖子ID',
+    createTime timestamp default CURRENT_TIMESTAMP comment '创建时间',
+    updateTime timestamp default CURRENT_TIMESTAMP comment '更新时间',
+    isDelete   int       default 0 comment '是否删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='点赞表';
 
 
 

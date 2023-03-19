@@ -18,6 +18,7 @@ import com.lmx.project.model.vo.TopicBankVo;
 import com.lmx.project.service.TopicbankService;
 import com.lmx.project.service.UsertopicbankService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/topicbank")
 @ResponseBody
+@Api("题库模块")
 public class TopicbankController {
     /**
      * 题库服务
@@ -129,7 +131,7 @@ public class TopicbankController {
      * 查询单个题目信息
      */
     @GetMapping
-    public BaseResponse<Topicbank> getTopicBank(Long id) {
+    public BaseResponse<Topicbank> getTopicBankOneByid(Long id) {
         if (id == 0L) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "题库id不能为0");
         }
@@ -149,7 +151,7 @@ public class TopicbankController {
      * 查询多个题目信息,根据关卡查询题目信息
      */
     @PostMapping("list")
-    public BaseResponse<IPage<Topicbank>> getTopicBank(@RequestBody TopicBankQueryRequest topicBankQueryRequest) {
+    public BaseResponse<IPage<Topicbank>> getTopicBankList(@RequestBody TopicBankQueryRequest topicBankQueryRequest) {
 
         LambdaQueryWrapper<Topicbank> topicbankLambdaQueryWrapper = new LambdaQueryWrapper<>();
 
@@ -247,7 +249,6 @@ public class TopicbankController {
         List<TopicBankVo> list = usertopicbankService.getTopicBankBlevel(userid, level);
 //        if (list!=null && list.size()>0){
 //
-
 //        }
 //         如果list是空说明没有闯关
         return ResultUtils.success(list);

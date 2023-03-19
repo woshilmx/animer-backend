@@ -1,6 +1,5 @@
 package com.lmx.project.aop;
 
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.lmx.project.common.ErrorCode;
 import com.lmx.project.model.entity.User;
 import com.lmx.project.annotation.AuthCheck;

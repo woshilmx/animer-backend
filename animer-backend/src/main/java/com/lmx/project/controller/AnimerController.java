@@ -14,9 +14,11 @@ import com.lmx.project.model.dto.Animer.AnimalQueryRequest;
 import com.lmx.project.model.dto.Animer.AnimalUpdateRequest;
 import com.lmx.project.model.entity.Animal;
 import com.lmx.project.model.entity.Classify;
+import com.lmx.project.model.vo.ClassifyVO;
 import com.lmx.project.service.AnimalService;
 import com.lmx.project.service.ClassifyService;
 import com.lmx.project.until.FileUntil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -29,12 +31,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/animer")
 @Slf4j
+@Api("动物模块")
 public class AnimerController {
     @Resource
     private AnimalService animalService;
@@ -104,9 +108,9 @@ public class AnimerController {
             String resultfilename = replace + substring;
             InputStream inputStream = image.getInputStream();
             String filepath = animalfile + resultfilename;
-            boolean b = fileUntil.saveFile(inputStream, filepath);
-            if (b) {
-                animal.setPicture(animalfile + resultfilename);
+            String b = fileUntil.saveFile(inputStream, filepath);
+            if (b!=null) {
+                animal.setPicture(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传失败");
             }
@@ -145,9 +149,9 @@ public class AnimerController {
             String resultfilename = replace + substring;
             InputStream inputStream = image.getInputStream();
             String filepath = animalfile + resultfilename;
-            boolean b = fileUntil.saveFile(inputStream, filepath);
-            if (b) {
-                animal.setPicture(animalfile + resultfilename);
+            String b = fileUntil.saveFile(inputStream, filepath);
+            if (b!=null) {
+                animal.setPicture(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片修改失败");
             }
@@ -173,9 +177,9 @@ public class AnimerController {
         }
         Animal byId = animalService.getById(id);
 
-        if (byId!=null){
-            byId.setPicture(fileUntil.getIpaddress()+byId.getPicture());;
-        }
+//        if (byId!=null){
+//            byId.setPicture(fileUntil.getIpaddress()+byId.getPicture());;
+//        }
         return ResultUtils.success(byId);
     }
 
@@ -204,6 +208,12 @@ public class AnimerController {
             animalLambdaQueryWrapper.eq(Animal::getCategoryid, animalQueryRequest.getCategoryid());
 
         }
+
+        if (animalQueryRequest.getCategoryIdClass() != null && animalQueryRequest.getCategoryIdClass() != 0) {
+            animalLambdaQueryWrapper.eq(Animal::getCategoryIdClass, animalQueryRequest.getCategoryIdClass());
+
+        }
+
         if (StringUtils.isNotBlank(animalQueryRequest.getIntroduction())) {
             animalLambdaQueryWrapper.like(Animal::getIntroduction, animalQueryRequest.getIntroduction());
 
@@ -233,19 +243,19 @@ public class AnimerController {
         IPage<Animal> page = animalService.page(new Page<>(animalQueryRequest.getCurrent(), animalQueryRequest.getPageSize()), animalLambdaQueryWrapper);
 
 
-        List<Animal> records = page.getRecords();
-
-
-        records.stream().forEach(item -> {
-            try {
-                if (item!=null){
-                    item.setPicture(fileUntil.getIpaddress() + item.getPicture());
-                }
-
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-        });
+//        List<Animal> records = page.getRecords();
+//
+//
+//        records.stream().forEach(item -> {
+//            try {
+////                if (item!=null){
+////                    item.setPicture(fileUntil.getIpaddress() + item.getPicture());
+////                }
+//
+//            } catch (UnknownHostException e) {
+//                e.printStackTrace();
+//            }
+//        });
         return ResultUtils.success(page);
     }
 
@@ -254,8 +264,35 @@ public class AnimerController {
      * 获取分类的信息
      */
     @GetMapping("classify")
-    public BaseResponse<List<Classify>> getClassify() {
+    public BaseResponse<List<ClassifyVO>> getClassify() {
         List<Classify> list = classifyService.list();
-        return ResultUtils.success(list);
+
+        List<ClassifyVO> classifyVOS = new ArrayList<>();
+
+        List<Classify> classify1 = new ArrayList<>();
+        List<Classify> classify2 = new ArrayList<>();
+
+
+        ClassifyVO classifyVO1 = new ClassifyVO();
+        classifyVO1.setStasu(1);
+        ClassifyVO classifyVO2 = new ClassifyVO();
+        classifyVO2.setStasu(2);
+        list.stream().forEach(item->{
+            if (item.getStatus()!=null){
+                if (item.getStatus()==1){
+                    classify1.add(item);
+                }
+                if (item.getStatus()==2){
+                    classify2.add(item);
+                }
+            }
+        });
+        classifyVO1.setClassifyList(classify1);
+        classifyVO2.setClassifyList(classify2);
+
+        classifyVOS.add(classifyVO1);
+        classifyVOS.add(classifyVO2);
+
+        return ResultUtils.success(classifyVOS);
     }
 }

@@ -13,6 +13,7 @@ import com.lmx.project.model.dto.document.DocumentUpdateRequest;
 import com.lmx.project.model.entity.Document;
 import com.lmx.project.service.DocumentService;
 import com.lmx.project.until.FileUntil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Delete;
@@ -33,6 +34,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/document")
 @Slf4j
+@Api("文献模块")
 public class DocumentController {
 
     @Resource
@@ -85,9 +87,9 @@ public class DocumentController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename+substring);
-            if (b) {
-                document.setUrl(documentdir + resultfilename+substring);
+            String b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename+substring);
+            if (b!=null) {
+                document.setUrl(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -120,9 +122,9 @@ public class DocumentController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename+substring);
-            if (b) {
-                document.setUrl(documentdir + resultfilename+substring);
+            String b = fileUntil.saveFile(documentfile.getInputStream(), documentdir + resultfilename+substring);
+            if (b!=null) {
+                document.setUrl(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
@@ -167,8 +169,8 @@ public class DocumentController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "id不能为0或空");
         }
         Document byId = documentService.getById(id);
-        String ipaddress = fileUntil.getIpaddress();
-        byId.setUrl(ipaddress + byId.getUrl());
+//        String ipaddress = fileUntil.getIpaddress();
+//        byId.setUrl(ipaddress + byId.getUrl());
         return ResultUtils.success(byId);
     }
 
@@ -189,7 +191,7 @@ public class DocumentController {
         LambdaQueryWrapper<Document> documentLambdaQueryWrapper = new LambdaQueryWrapper<>();
 
 // 动物类别查
-        if (documentQueryRequest.getAnimalid() != 0) {
+        if (documentQueryRequest.getAnimalid() != null && documentQueryRequest.getAnimalid()!=0) {
          documentLambdaQueryWrapper.eq(Document::getAnimalid,documentQueryRequest.getAnimalid());
         }
 //   作者查
@@ -208,15 +210,15 @@ public class DocumentController {
                 documentLambdaQueryWrapper);
         List<Document> records = page.getRecords();
 
-        records.stream().forEach(item->{
-            try {
-                item.setUrl(fileUntil.getIpaddress()+item.getUrl());
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-        });
-
-        page.setRecords(records);
+//        records.stream().forEach(item->{
+//            try {
+//                item.setUrl(fileUntil.getIpaddress()+item.getUrl());
+//            } catch (UnknownHostException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        page.setRecords(records);
         return ResultUtils.success(page);
     }
 

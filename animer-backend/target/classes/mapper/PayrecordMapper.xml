@@ -9,9 +9,9 @@
             <result property="userid" column="userId" jdbcType="BIGINT"/>
             <result property="paynum" column="payNum" jdbcType="VARCHAR"/>
             <result property="payamount" column="payAmount" jdbcType="DECIMAL"/>
-            <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">

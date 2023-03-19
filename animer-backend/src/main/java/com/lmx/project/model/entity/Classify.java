@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 /**
@@ -24,6 +26,11 @@ public class Classify implements Serializable {
      * 类别的名称
      */
     private String name;
+
+    /**
+    * 两类 1——类 2——目
+     * */
+    private Integer status;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -1,9 +1,7 @@
 package com.lmx.project.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -49,18 +47,20 @@ public class News implements Serializable {
     /**
      * 创建时间
      */
-    private Date createtime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private Date updatetime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 
     /**
      * 是否删除
      */
     @TableLogic
-    private Integer isdelete;
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -83,9 +83,9 @@ public class News implements Serializable {
             && (this.getReleasetime() == null ? other.getReleasetime() == null : this.getReleasetime().equals(other.getReleasetime()))
             && (this.getCoverimg() == null ? other.getCoverimg() == null : this.getCoverimg().equals(other.getCoverimg()))
             && (this.getNewscontent() == null ? other.getNewscontent() == null : this.getNewscontent().equals(other.getNewscontent()))
-            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
-            && (this.getUpdatetime() == null ? other.getUpdatetime() == null : this.getUpdatetime().equals(other.getUpdatetime()))
-            && (this.getIsdelete() == null ? other.getIsdelete() == null : this.getIsdelete().equals(other.getIsdelete()));
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
+            && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()));
     }
 
     @Override
@@ -98,9 +98,9 @@ public class News implements Serializable {
         result = prime * result + ((getReleasetime() == null) ? 0 : getReleasetime().hashCode());
         result = prime * result + ((getCoverimg() == null) ? 0 : getCoverimg().hashCode());
         result = prime * result + ((getNewscontent() == null) ? 0 : getNewscontent().hashCode());
-        result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
-        result = prime * result + ((getUpdatetime() == null) ? 0 : getUpdatetime().hashCode());
-        result = prime * result + ((getIsdelete() == null) ? 0 : getIsdelete().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
         return result;
     }
 
@@ -116,9 +116,9 @@ public class News implements Serializable {
         sb.append(", releasetime=").append(releasetime);
         sb.append(", coverimg=").append(coverimg);
         sb.append(", newscontent=").append(newscontent);
-        sb.append(", createtime=").append(createtime);
-        sb.append(", updatetime=").append(updatetime);
-        sb.append(", isdelete=").append(isdelete);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append(", isDelete=").append(isDelete);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -17,6 +17,7 @@ import com.lmx.project.model.dto.user.*;
 import com.lmx.project.service.UserService;
 import com.lmx.project.until.FileUntil;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 @Slf4j
+@Api("用户模块")
 public class UserController {
 
     @Resource
@@ -74,8 +76,52 @@ public class UserController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "昵称不能为空");
         }
 
-        if (userAddRequest.getAddAvatarFile() == null) {
+        if (userAddRequest.getAvatar()==null && userAddRequest.getAddAvatarFile() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "头像不能为空");
+        }
+
+
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getEmail,userAddRequest.getEmail());
+        User one = userService.getOne(queryWrapper);
+        if (one!=null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"该邮箱已存在,请勿重复注册");
+        }
+
+        boolean result = userService.addUser(userAddRequest);
+        return ResultUtils.success(result);
+
+
+    }
+
+
+    /**
+     * 用户注册
+     */
+    @PostMapping("wxresgiter")
+    public BaseResponse<Boolean> AddUserWx(UserAddRequest userAddRequest) throws IOException {
+
+        if (!StringUtils.isNotBlank(userAddRequest.getOpenid())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "openid不能为空");
+        }
+
+//        if (!StringUtils.isNotBlank(userAddRequest.getPassword())) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "密码不能为空");
+//        }
+
+        if (!StringUtils.isNotBlank(userAddRequest.getNickname())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "昵称不能为空");
+        }
+
+        if (userAddRequest.getAvatar()==null && userAddRequest.getAddAvatarFile() == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "头像不能为空");
+        }
+
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getOpenid,userAddRequest.getOpenid());
+        User one = userService.getOne(queryWrapper);
+        if (one!=null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"该OpenId已存在，请勿重复注册");
         }
 
         boolean result = userService.addUser(userAddRequest);
@@ -118,20 +164,16 @@ public class UserController {
             String resultfilename = UUID.randomUUID().toString().replace("-", "");
 
 
-            boolean b = fileUntil.saveFile(addAvatarFile.getInputStream(), userdir + resultfilename+substring);
-            if (b) {
-                user.setAvatar(userdir + resultfilename+substring);
+            String b = fileUntil.saveFile(addAvatarFile.getInputStream(), userdir + resultfilename+substring);
+            if (b!=null) {
+                user.setAvatar(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
             }
         }
         log.info("用户信息是{}",user.toString());
         boolean b = userService.updateById(user);
-
-
         return ResultUtils.success(b);
-
-
     }
 
     /**
@@ -157,7 +199,7 @@ public class UserController {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getEmail, userLoginRequest.getEmail()).eq(User::getPassword, pwd);
         User one = userService.getOne(queryWrapper);
-        one.setAvatar(fileUntil.getIpaddress()+one.getAvatar());
+//        one.setAvatar(fileUntil.getIpaddress()+one.getAvatar());
         if (one != null) {
             return ResultUtils.success(one);
         } else {
@@ -178,13 +220,21 @@ public class UserController {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getOpenid, userLoginRequest.getOpenid());
         User one = userService.getOne(queryWrapper);
-        one.setAvatar(fileUntil.getIpaddress()+one.getAvatar());
         if (one != null) {
+//            if (!one.getAvatar().contains("http")){
+//                one.setAvatar(fileUntil.getIpaddress()+one.getAvatar());
+//            }
+
             return ResultUtils.success(one);
         } else {
             return ResultUtils.error(403, "暂无该用户信息");
         }
     }
+
+
+
+
+
 
     /**
      * 获取当前用户信息
@@ -197,7 +247,10 @@ public class UserController {
 
         User byId = userService.getById(id);
         if (byId!=null){
-            byId.setAvatar(fileUntil.getIpaddress()+byId.getAvatar());
+//            if (!byId.getAvatar().contains("http")){
+//                byId.setAvatar(fileUntil.getIpaddress() + byId.getAvatar());
+//            }
+
         }
         return ResultUtils.success(byId);
     }
@@ -237,16 +290,19 @@ public class UserController {
         Page<User> page = userService.page(userPage, queryWrapper);
 
 
-        List<User> records = page.getRecords();
+//        List<User> records = page.getRecords();
 
 
-        String ipaddress = fileUntil.getIpaddress();
+//        String ipaddress = fileUntil.getIpaddress();
 
-        records.stream().forEach(item -> {
-            item.setAvatar(ipaddress + item.getAvatar());
-        });
-
-        page.setRecords(records);
+//        records.stream().forEach(item -> {
+//            if (!item.getAvatar().contains("http")){
+//                item.setAvatar(ipaddress + item.getAvatar());
+//            }
+//
+//        });
+//
+//        page.setRecords(records);
 
         return ResultUtils.success(page);
 

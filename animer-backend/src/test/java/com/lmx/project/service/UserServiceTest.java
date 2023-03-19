@@ -34,7 +34,7 @@ class UserServiceTest {
     @Test
     public void asfadf() throws UnknownHostException {
 //        usertopicbankMapper.selectTopicBankByUserIdAndLevel(1L, 2L);
-        System.out.println(fileUntil.getIpaddress());
+//        System.out.println(fileUntil.getIpaddress());
     }
 
     @Test
@@ -57,7 +57,6 @@ class UserServiceTest {
         System.out.println(resultfilename);
 
     }
-
     @Test
     void testUpdateUser() {
         User user = new User();
