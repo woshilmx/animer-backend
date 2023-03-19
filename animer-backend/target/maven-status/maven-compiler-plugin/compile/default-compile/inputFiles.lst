@@ -41,6 +41,7 @@ E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\mapper\Payre
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\enums\PostGenderEnum.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\entity\Classify.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\dto\posts\PostsAddRequest.java
+E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\until\PaChongUntil.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\service\CommentService.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\entity\Exchange.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\service\PayrecordService.java
@@ -66,6 +67,7 @@ E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\constant\Com
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\service\NewsService.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\dto\user\UserQueryRequest.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\dto\comment\CommentAddRequest.java
+E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\until\ImageChangeUntil.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\common\BaseResponse.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\service\LiketableService.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\config\BaiDuConfigure.java
@@ -110,6 +112,7 @@ E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\enums\
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\common\PageRequest.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\vo\TopicBankVo.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\controller\NewsController.java
+E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\enums\ImageMode.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\until\FileUntil.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\entity\Comment.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\dto\Animer\AnimalQueryRequest.java

@@ -78,7 +78,7 @@ public class ImageChangeUntil {
     /**
      * base64 转图片
      */
-    public boolean base64StrToImage(String imgStr, String path) {
+    private boolean base64StrToImage(String imgStr, String path) {
 
         if (imgStr == null)
             return false;

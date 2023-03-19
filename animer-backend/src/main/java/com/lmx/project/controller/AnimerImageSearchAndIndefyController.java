@@ -47,29 +47,29 @@ public class AnimerImageSearchAndIndefyController {
      * 实现图像风格转化
      */
     @PostMapping("change")
-    public BaseResponse<String> ChangeAnimerByImage(@RequestParam MultipartFile animerimage, @RequestParam int mode) throws IOException {
+    public BaseResponse<String> ChangeAnimerByImage(@RequestParam MultipartFile animerimage, @RequestParam String mode) throws IOException {
         if (animerimage.getSize() >= 4 * 1024 * 1024) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件大小需要小于4MB");
         }
 
         InputStream inputStream = animerimage.getInputStream();
 
-        String s = imageChangeUntil.imageChange(inputStream, ImageMode.cartoon);
+        ImageMode item = ImageMode.getItem(mode);
+        String s = imageChangeUntil.imageChange(inputStream, item);
 
         if (s != null) {
             return ResultUtils.success(s);
         } else {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR);
         }
-
     }
 
     /**
      * 获取所有的能转化的风格样式
      */
     @GetMapping("mode")
-    public BaseResponse<Map<String,String>> getImageMode() {
-        Map<String,String> values = ImageMode.getValues();
+    public BaseResponse<Map<String, String>> getImageMode() {
+        Map<String, String> values = ImageMode.getValues();
         return ResultUtils.success(values);
     }
 }

@@ -5,9 +5,11 @@ com\lmx\project\model\dto\news\NewsAddRequest.class
 com\lmx\project\controller\UserController.class
 com\lmx\project\model\dto\usertopicbank\UserTopicBankAddRequest.class
 META-INF\spring-configuration-metadata.json
+com\lmx\project\model\enums\ImageMode.class
 com\lmx\project\service\DocumentService.class
 com\lmx\project\service\TopicbankService.class
 com\lmx\project\mapper\UsertopicbankMapper.class
+com\lmx\project\until\PaChongUntil.class
 com\lmx\project\mapper\ExchangeMapper.class
 com\lmx\project\mapper\AnimalMapper.class
 com\lmx\project\model\dto\Animer\AnimalQueryRequest.class
@@ -41,6 +43,7 @@ com\lmx\project\model\vo\ExchangeVo.class
 com\lmx\project\model\dto\document\DocumentAddRequest.class
 com\lmx\project\mapper\PayrecordMapper.class
 com\lmx\project\model\dto\news\NewsQueryRequest.class
+com\lmx\project\until\ImageChangeUntil.class
 com\lmx\project\mapper\NewsMapper.class
 com\lmx\project\aop\LogInterceptor.class
 com\lmx\project\service\impl\ClassifyServiceImpl.class

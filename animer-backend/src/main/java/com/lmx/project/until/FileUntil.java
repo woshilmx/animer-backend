@@ -107,7 +107,7 @@ public class FileUntil {
 
 
     public String getIpaddress() throws UnknownHostException {
-        String hostAddress = InetAddress.getLocalHost().getHostAddress();
+//        String hostAddress = InetAddress.getLocalHost().getHostAddress();
         String pre = "http://";
 
         return pre + address + ":" + port + contextpath + "/file/";

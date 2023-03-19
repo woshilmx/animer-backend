@@ -34,6 +34,16 @@ public enum ImageMode {
     public String getValue() {
         return value;
     }
+
+    public static ImageMode getItem(String value) {
+        ImageMode[] values = values();
+        for (ImageMode imageMode : values) {
+            if (imageMode.getValue().equals(value)) {
+                return imageMode;
+            }
+        }
+        return null;
+    }
     //    String pencil = "pencil";   //：铅笔风格
 //    String color_pencil = "color_pencil";   //        ：彩色铅笔画风格
 //    String warm = "warm";   //：彩色糖块油画风格
