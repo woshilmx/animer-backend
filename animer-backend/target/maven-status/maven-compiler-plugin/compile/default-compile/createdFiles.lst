@@ -3,6 +3,7 @@ com\lmx\project\common\BaseResponse.class
 com\lmx\project\mapper\DocumentMapper.class
 com\lmx\project\model\dto\news\NewsAddRequest.class
 com\lmx\project\controller\UserController.class
+com\lmx\project\lister\RabbotListenser.class
 com\lmx\project\model\dto\usertopicbank\UserTopicBankAddRequest.class
 META-INF\spring-configuration-metadata.json
 com\lmx\project\model\enums\ImageMode.class
@@ -26,6 +27,7 @@ com\lmx\project\model\entity\Document.class
 com\lmx\project\service\impl\LiketableServiceImpl.class
 com\lmx\project\service\UserService.class
 com\lmx\project\controller\NewsController.class
+com\lmx\project\config\RabbitMQConfigure.class
 com\lmx\project\model\dto\user\UserQueryRequest.class
 com\lmx\project\exception\GlobalExceptionHandler.class
 com\lmx\project\model\entity\Animal.class
@@ -47,6 +49,7 @@ com\lmx\project\until\ImageChangeUntil.class
 com\lmx\project\mapper\NewsMapper.class
 com\lmx\project\aop\LogInterceptor.class
 com\lmx\project\service\impl\ClassifyServiceImpl.class
+com\lmx\project\until\ImageChangeUntil$1.class
 com\lmx\project\common\ResultUtils.class
 com\lmx\project\service\impl\UserServiceImpl.class
 com\lmx\project\model\entity\News.class
@@ -63,7 +66,6 @@ com\lmx\project\model\enums\PostGenderEnum.class
 com\lmx\project\service\impl\AnimalServiceImpl.class
 com\lmx\project\mapper\UserexchangeMapper.class
 com\lmx\project\aop\AuthInterceptor.class
-com\lmx\project\until\PayFile.class
 com\lmx\project\mapper\CommentMapper.class
 com\lmx\project\model\entity\User.class
 com\lmx\project\service\ClassifyService.class

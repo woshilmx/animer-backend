@@ -3,12 +3,14 @@ package com.lmx.project.controller;
 import com.lmx.project.common.BaseResponse;
 import com.lmx.project.common.ErrorCode;
 import com.lmx.project.common.ResultUtils;
+import com.lmx.project.config.RabbitMQConfigure;
 import com.lmx.project.exception.BusinessException;
 import com.lmx.project.model.enums.ImageMode;
 import com.lmx.project.until.AnimalIdentUntil;
 import com.lmx.project.until.ImageChangeUntil;
 import io.swagger.annotations.Api;
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +29,9 @@ public class AnimerImageSearchAndIndefyController {
 
     @Resource
     private ImageChangeUntil imageChangeUntil;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 实现根据图片检测动物信息
@@ -58,6 +63,7 @@ public class AnimerImageSearchAndIndefyController {
         String s = imageChangeUntil.imageChange(inputStream, item);
 
         if (s != null) {
+
             return ResultUtils.success(s);
         } else {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR);

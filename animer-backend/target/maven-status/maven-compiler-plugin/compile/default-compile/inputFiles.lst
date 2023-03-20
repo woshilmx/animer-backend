@@ -29,6 +29,7 @@ E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\until\Animal
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\aop\LogInterceptor.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\common\ResultUtils.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\aop\AuthInterceptor.java
+E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\config\RabbitMQConfigure.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\model\dto\Topicbank\TopicbankUpdateRequest.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\service\ExchangeService.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\mapper\UserMapper.java
@@ -72,6 +73,7 @@ E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\common\BaseR
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\service\LiketableService.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\config\BaiDuConfigure.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\exception\BusinessException.java
+E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\lister\RabbotListenser.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\until\ChatGptUntil.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\service\UserService.java
 E:\javaProject2023\ead\animer-backend\src\main\java\com\lmx\project\mapper\UsertopicbankMapper.java

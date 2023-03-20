@@ -1,8 +1,13 @@
 package com.lmx.project.until;
 
 import com.baidu.aip.imageprocess.AipImageProcess;
+import com.lmx.project.config.RabbitMQConfigure;
 import com.lmx.project.model.enums.ImageMode;
 import org.json.JSONObject;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +29,8 @@ public class ImageChangeUntil {
     @Resource
     private FileUntil fileUntil;
 
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     @Resource
     private AipImageProcess aipImageProcess;
@@ -65,7 +72,17 @@ public class ImageChangeUntil {
                 path = path + replace;
                 base64StrToImage(image, path);
                 String ipaddress = fileUntil.getIpaddress();
-                return ipaddress + "change/"+replace;
+                MessagePostProcessor messagePostProcessor = new MessagePostProcessor() {
+                    @Override
+                    public Message postProcessMessage(Message message) throws AmqpException {
+//                设置Expiration属性
+                        message.getMessageProperties().setExpiration("1800000");
+                        return message;
+
+                    }
+                };
+                rabbitTemplate.convertAndSend(RabbitMQConfigure.TocpicExchangeName, "imagechange.file", path,messagePostProcessor);
+                return ipaddress + "change/" + replace;
             }
         } catch (Exception e) {
             e.printStackTrace();
