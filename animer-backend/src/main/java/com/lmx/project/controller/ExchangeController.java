@@ -22,6 +22,7 @@ import com.lmx.project.service.ExchangeService;
 import com.lmx.project.service.UserexchangeService;
 import com.lmx.project.until.FileUntil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -64,6 +65,7 @@ public class ExchangeController {
      */
 
     @PostMapping
+    @ApiOperation("增加商品信息")
     public BaseResponse<Boolean> addExchange(ExchangeAddRequest exchangeAddRequest) throws IOException {
         if (exchangeAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -93,7 +95,7 @@ public class ExchangeController {
 
 
             String b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
-            if (b!=null) {
+            if (b != null) {
                 exchange.setPicture(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
@@ -111,7 +113,7 @@ public class ExchangeController {
      * 修改商品信息
      */
     @PostMapping("update")
-
+    @ApiOperation(value = "修改商品信息", notes = "id是必传的参数")
     public BaseResponse<Boolean> UpdateExchange(ExchangeUpdateRequest exchangeUpdateRequest) throws IOException {
         if (exchangeUpdateRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -128,7 +130,7 @@ public class ExchangeController {
 
 
             String b = fileUntil.saveFile(documentfile.getInputStream(), exchangedir + resultfilename + substring);
-            if (b!=null) {
+            if (b != null) {
                 exchange.setPicture(b);
             } else {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "图片上传错误");
@@ -147,6 +149,7 @@ public class ExchangeController {
      * 删除商品信息
      */
     @DeleteMapping
+    @ApiOperation("删除商品信息")
     public BaseResponse<Boolean> delelteExchange(Long id) throws IOException {
 
         if (id == 0) {
@@ -165,6 +168,7 @@ public class ExchangeController {
      */
 
     @GetMapping
+    @ApiOperation("根据id查询商品信息")
     public BaseResponse<Exchange> getExchange(Long id) throws IOException {
 
         if (id == 0) {
@@ -180,6 +184,7 @@ public class ExchangeController {
      * 分页查询商品信息,商品数量不多
      */
     @PostMapping("list")
+    @ApiOperation("查询所有商品信息")
     public BaseResponse<List<Exchange>> getExchage() {
         LambdaQueryWrapper<Exchange> queryWrapper = new LambdaQueryWrapper<>();
 //        0是上架状态
@@ -199,6 +204,7 @@ public class ExchangeController {
     /**
      * 增加商品的兑换记录
      */
+    @ApiOperation("增加商品兑换记录")
     @PostMapping("userexchange")
     public BaseResponse<Boolean> addUserExchange(@RequestBody UserexchangeAddRequest userexchangeAddRequest) {
         if (userexchangeAddRequest == null) {
@@ -232,6 +238,7 @@ public class ExchangeController {
      * 修改商品的兑换记录
      */
     @GetMapping("userexchange")
+    @ApiOperation(value = "修改商品的兑换记录",notes = "id必须传递的属性")
     public BaseResponse<Boolean> UpdateUserExchange(Long id, int statu) {
         if (id == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -250,6 +257,7 @@ public class ExchangeController {
      * 查询兑换记录
      */
     @PostMapping("userexchange/list")
+    @ApiOperation(value = "查询兑换记录",notes = "current与size为必须传递的属性")
     public BaseResponse<List<ExchangeVo>> GetUserExchange(@RequestBody UserexchangeQueryRequest userexchangeQueryRequest) {
         List<ExchangeVo> exchangeVos = userexchangeService.getAllExchange(userexchangeQueryRequest);
         return ResultUtils.success(exchangeVos);

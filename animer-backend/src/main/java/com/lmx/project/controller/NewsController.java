@@ -16,6 +16,7 @@ import com.lmx.project.service.NewsService;
 import com.lmx.project.until.FileUntil;
 import com.lmx.project.until.PaChongUntil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,7 @@ public class NewsController {
      * 增加
      */
     @PostMapping
+    @ApiOperation("增加新闻信息")
     public BaseResponse<Boolean> addNews(NewsAddRequest newsAddRequest) throws IOException, ParseException {
 
 
@@ -112,6 +114,7 @@ public class NewsController {
      */
 
     @DeleteMapping()
+    @ApiOperation(value = "删除新闻信息",notes = "id是新闻记录的id")
     public BaseResponse<Boolean> deleteNews(Long id) {
         if (id == null || id == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -124,6 +127,7 @@ public class NewsController {
      * 修改
      */
     @PostMapping("update")
+    @ApiOperation("修改新闻信息")
     public BaseResponse<Boolean> UpdateNews( NewsUpdateRequest newsUpdateRequest) throws ParseException, IOException {
         if (newsUpdateRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -168,6 +172,7 @@ public class NewsController {
      * 根据id查询
      */
     @GetMapping()
+    @ApiOperation("根据id查询")
     public BaseResponse<News> getNewByid(Long id) throws UnknownHostException {
         if (id == null || id == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -182,6 +187,7 @@ public class NewsController {
      */
 
     @PostMapping("list")
+    @ApiOperation("分页查询新闻信息")
     public BaseResponse<IPage<News>> getNews(@RequestBody NewsQueryRequest newsQueryRequest) {
         if (newsQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -227,6 +233,7 @@ public class NewsController {
     * 从央视网获取新闻
     * */
     @GetMapping("network")
+    @ApiOperation(value = "从央视网获取新闻",notes = "searchtext 查询的新闻关键字 page 显示的页数")
     public BaseResponse<List<News>> getNewsByYagnShi(String searchtext,int page) throws ParseException, IOException {
 
         if (searchtext==null){

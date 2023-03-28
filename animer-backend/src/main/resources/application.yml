@@ -72,7 +72,12 @@ qiniu:
   secretKey: stAvnzTLh9c0-sh_Ts8nkN-hn9B5H3ldxbCnEVQR
   preurl: http://image.tsjsjxxc.top/
 
-
+openai:
+  token: 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
+  timeout: 5000
+proxy:
+  host: 127.0.0.1
+  port: 10809
 #
 #
 #  http://127.0.0.1/api/document?id=1;

@@ -147,14 +147,60 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.16</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/client -->
+        <!-- https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/service -->
 <!--        <dependency>-->
+<!--            <groupId>com.theokanning.openai-gpt3-java</groupId>-->
+<!--            <artifactId>service</artifactId>-->
+<!--            <version>0.10.0</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/service -->
+        <!-- https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/service -->
+        <dependency>
+            <groupId>com.theokanning.openai-gpt3-java</groupId>
+            <artifactId>service</artifactId>
+            <version>0.11.1</version>
+        </dependency>
+
+
+
+        <!-- 导入openai依赖 -->
+<!--        <dependency>-->
+<!--            <groupId>com.theokanning.openai-gpt3-java</groupId>-->
+<!--            <artifactId>client</artifactId>-->
+<!--            <version>0.8.3</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/client -->
+<!--        <dependency>-->
+<!--            <groupId>com.theokanning.openai-gpt3-java</groupId>-->
+<!--            <artifactId>client</artifactId>-->
+<!--            <version>0.11.1</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; openAi 最新版依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.unfbx</groupId>-->
+<!--            <artifactId>chatgpt-java</artifactId>-->
+<!--            <version>1.0.6</version>-->
+<!--        </dependency>-->
+
+        <!--        <dependency>-->
 <!--            <groupId>org.springframework.amqp</groupId>-->
 <!--            <artifactId>spring-rabbit</artifactId>-->
 <!--            <version>2.2.15.RELEASE</version>-->
 <!--        </dependency>-->
 
 
-        <!--&lt;!&ndash;chatgpt&ndash;&gt;-->
+<!--        &lt;!&ndash;chatgpt&ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>com.theokanning.openai-gpt3-java</groupId>-->
 <!--            <artifactId>client</artifactId>-->

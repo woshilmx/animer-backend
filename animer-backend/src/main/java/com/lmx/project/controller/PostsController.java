@@ -24,6 +24,7 @@ import com.lmx.project.service.PostsService;
 import com.lmx.project.service.UserService;
 import com.lmx.project.until.FileUntil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +61,7 @@ public class PostsController {
      * 增加帖子
      */
     @PostMapping
+    @ApiOperation("增加帖子")
     public BaseResponse<Long> addPost(@RequestBody PostsAddRequest postsAddRequest) {
         if (!StringUtils.isNotBlank(postsAddRequest.getContent())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "内容不能为空");
@@ -102,6 +104,7 @@ public class PostsController {
      */
 
     @DeleteMapping
+    @ApiOperation(value = "删除帖子",notes = "参数是帖子id")
     public BaseResponse<Boolean> deletePost(Long id) {
         if (id == null || id == 0L) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "id错误");
@@ -115,6 +118,7 @@ public class PostsController {
      * 修改帖子
      */
     @PutMapping
+    @ApiOperation(value = "修改帖子",notes = "id是必须的属性")
     public BaseResponse<Long> UpdatePost(@RequestBody PostsUpdateRequest postsUpdateRequest) {
 
         if (postsUpdateRequest.getId() == null || postsUpdateRequest.getId() == 0) {
@@ -137,6 +141,7 @@ public class PostsController {
      * 根据id查询
      */
     @GetMapping
+    @ApiOperation("根据id查询帖子信息")
     public BaseResponse<Posts> GetPostbyid(Long id) {
         if (id == null || id == 0L) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "id错误");
@@ -150,6 +155,7 @@ public class PostsController {
      * 多条件查询
      */
     @PostMapping("query")
+    @ApiOperation("分页查询帖子信息")
     public BaseResponse<Page<Posts>> GetPostsBy(@RequestBody PostsQueryRequest postsQueryRequest) {
 
 
@@ -190,6 +196,7 @@ public class PostsController {
      */
 
     @GetMapping("addlike")
+    @ApiOperation("增加点赞数")
     public BaseResponse<Boolean> uodateAddBylikeNum(Long userid, Long postsid) {
 
         if (userid == null || userid == 0) {
@@ -209,6 +216,7 @@ public class PostsController {
      * 撤销点赞
      */
     @GetMapping("reducelike")
+    @ApiOperation("撤销点赞")
     public BaseResponse<Boolean> uodateReduceBylikeNum(Long userid, Long postsid) {
 
         if (userid == null || userid == 0) {
@@ -227,6 +235,7 @@ public class PostsController {
      * 增加评论
      */
     @PostMapping("comment")
+    @ApiOperation("增加评论")
     public BaseResponse<Long> AddComent(@RequestBody CommentAddRequest commentAddRequest) {
         if (commentAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -265,6 +274,7 @@ public class PostsController {
      */
 
     @DeleteMapping("comment")
+    @ApiOperation("删除评论")
     public BaseResponse<Boolean> DeleteComent(@RequestBody CommentDeleteRequest commentDeleteRequest) {
         if (commentDeleteRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -296,6 +306,7 @@ public class PostsController {
      * 查询评论
      */
     @GetMapping("comment")
+    @ApiOperation("查询评论")
     public BaseResponse<Page<Comment>> getComments(CommentQueryRequest commentQueryRequest) {
 
         if (commentQueryRequest.getCurrent() == 0 || commentQueryRequest.getPageSize() == 0) {
@@ -333,6 +344,7 @@ public class PostsController {
      *     }
      * }
     * */
+    @ApiOperation("富文本编辑器中图片/视频的上传")
     public String addImage(MultipartFile imagefile) throws IOException {
         log.info("images接口被触发");
         if (imagefile == null) {

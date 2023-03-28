@@ -1,6 +1,8 @@
 package com.lmx.project.common;
 
 import com.lmx.project.constant.CommonConstant;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
 /**
@@ -14,11 +16,13 @@ public class PageRequest {
     /**
      * 当前页号
      */
+    @ApiModelProperty("当前的页号")
     private long current = 1;
 
     /**
      * 页面大小
      */
+    @ApiModelProperty("页面的大小")
     private long pageSize = 10;
 
 //    /**

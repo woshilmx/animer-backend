@@ -9,6 +9,7 @@ import com.lmx.project.model.enums.ImageMode;
 import com.lmx.project.until.AnimalIdentUntil;
 import com.lmx.project.until.ImageChangeUntil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.json.JSONObject;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,7 @@ public class AnimerImageSearchAndIndefyController {
      * 实现根据图片检测动物信息
      */
     @PostMapping("indefy")
+    @ApiOperation(value = "传递动物照片信息", notes = "传递的文件参数名称为animerimage")
     public BaseResponse<String> IdenfyAnimerByImage(@RequestParam MultipartFile animerimage) throws IOException {
         if (animerimage.getSize() >= 4 * 1024 * 1024) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件大小需要小于4MB");
@@ -52,6 +54,7 @@ public class AnimerImageSearchAndIndefyController {
      * 实现图像风格转化
      */
     @PostMapping("change")
+    @ApiOperation(value = "实现图像的风格转化",notes = "传递的参数是：animerimage 文件,mode为变换的类型，详情可见获取类型接口")
     public BaseResponse<String> ChangeAnimerByImage(@RequestParam MultipartFile animerimage, @RequestParam String mode) throws IOException {
         if (animerimage.getSize() >= 4 * 1024 * 1024) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件大小需要小于4MB");
@@ -74,6 +77,7 @@ public class AnimerImageSearchAndIndefyController {
      * 获取所有的能转化的风格样式
      */
     @GetMapping("mode")
+    @ApiOperation("获取能转换的风格样式")
     public BaseResponse<Map<String, String>> getImageMode() {
         Map<String, String> values = ImageMode.getValues();
         return ResultUtils.success(values);

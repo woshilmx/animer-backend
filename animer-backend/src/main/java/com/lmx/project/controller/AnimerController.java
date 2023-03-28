@@ -19,6 +19,7 @@ import com.lmx.project.service.AnimalService;
 import com.lmx.project.service.ClassifyService;
 import com.lmx.project.until.FileUntil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -56,6 +57,7 @@ public class AnimerController {
      * 增加濒危动物信息
      */
     @PostMapping()
+    @ApiOperation("增加濒危动物信息")
     public BaseResponse<Boolean> addAnimer(AnimalAddRequest animalAddRequest) throws IOException {
         if (animalAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -127,6 +129,7 @@ public class AnimerController {
     /**
      * 更新濒危动物信息
      */
+    @ApiOperation("更新濒危动物信息")
     @PostMapping("update")
     public BaseResponse<Boolean> updateAnimer(AnimalUpdateRequest animalUpdateRequest) throws IOException {
         if (animalUpdateRequest == null || animalUpdateRequest.getId() == 0) {
@@ -170,6 +173,7 @@ public class AnimerController {
      * 根据id查询动物信息
      */
     @GetMapping()
+    @ApiOperation("根据id查询动物信息")
     public BaseResponse<Animal> getOneById(@RequestParam Long id) throws UnknownHostException {
 
         if (id == 0) {
@@ -188,6 +192,7 @@ public class AnimerController {
      * 分页查询动物信息
      */
     @PostMapping("list")
+    @ApiOperation("分页查询动物信息，current与size是必传参数，其他的参数根据业务需求自行确定是否传参")
     public BaseResponse<IPage<Animal>> getAnimelList(@RequestBody AnimalQueryRequest animalQueryRequest) {
 
         if (animalQueryRequest.getCurrent() == 0 || animalQueryRequest.getPageSize() == 0) {
@@ -264,6 +269,7 @@ public class AnimerController {
      * 获取分类的信息
      */
     @GetMapping("classify")
+    @ApiOperation("获取动物的分类信息")
     public BaseResponse<List<ClassifyVO>> getClassify() {
         List<Classify> list = classifyService.list();
 

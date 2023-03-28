@@ -19,6 +19,7 @@ import com.lmx.project.service.TopicbankService;
 import com.lmx.project.service.UsertopicbankService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.springframework.beans.BeanUtils;
@@ -54,6 +55,7 @@ public class TopicbankController {
      * 添加题库信息
      */
     @PostMapping
+    @ApiOperation("添加题库信息")
     public BaseResponse<Long> addTopicbank(@RequestBody TopicbankAddRequest topicbankAdd) {
 
         if (topicbankAdd == null) {
@@ -88,6 +90,7 @@ public class TopicbankController {
      * 修改题库信息
      */
     @PutMapping
+    @ApiOperation("修改题目信息")
     public BaseResponse<Boolean> updateTopicBank(@RequestBody TopicbankUpdateRequest topicbankUpdateRequest) {
 // 更新id不能为空
         if (topicbankUpdateRequest.getId() == null || topicbankUpdateRequest.getId() == 0) {
@@ -113,6 +116,7 @@ public class TopicbankController {
      * 删除题目信息
      */
     @DeleteMapping
+    @ApiOperation("删除题目信息")
     public BaseResponse<Boolean> deleteTopicBank(Long id) {
         if (id == 0L) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "题库id不能为0");
@@ -131,6 +135,7 @@ public class TopicbankController {
      * 查询单个题目信息
      */
     @GetMapping
+    @ApiOperation("查询单个题目信息")
     public BaseResponse<Topicbank> getTopicBankOneByid(Long id) {
         if (id == 0L) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "题库id不能为0");
@@ -151,6 +156,7 @@ public class TopicbankController {
      * 查询多个题目信息,根据关卡查询题目信息
      */
     @PostMapping("list")
+    @ApiOperation("查询多个题目信息,根据关卡查询题目信息")
     public BaseResponse<IPage<Topicbank>> getTopicBankList(@RequestBody TopicBankQueryRequest topicBankQueryRequest) {
 
         LambdaQueryWrapper<Topicbank> topicbankLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -177,6 +183,7 @@ public class TopicbankController {
      * 插入答题的状态
      */
     @PostMapping("usertopicbank")
+    @ApiOperation("修改答题的状态")
     public BaseResponse<Boolean> addUserTopicBank(@RequestBody UserTopicBankAddRequest userTopicBankAddRequest) {
         //   用户id
         if (userTopicBankAddRequest.getUserid() == null || userTopicBankAddRequest.getUserid() == 0) {
@@ -228,6 +235,7 @@ public class TopicbankController {
      * 查询通过的关卡
      */
     @GetMapping("/usertopic/getlevel")
+    @ApiOperation("查询用户通过的关卡")
     public BaseResponse<List<Integer>> getlevel(Long userid) {
         if (userid==0){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -242,6 +250,7 @@ public class TopicbankController {
      */
 
     @GetMapping("/usertopic/getbycard")
+    @ApiOperation("根据关卡与用户id查询用户的答题情况")
     public BaseResponse<List<TopicBankVo>> getLevelBycard(Long userid, Long level) {
         if (userid==0 || level==0){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

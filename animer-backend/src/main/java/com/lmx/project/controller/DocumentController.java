@@ -14,6 +14,7 @@ import com.lmx.project.model.entity.Document;
 import com.lmx.project.service.DocumentService;
 import com.lmx.project.until.FileUntil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Delete;
@@ -51,6 +52,7 @@ public class DocumentController {
      */
 
     @PostMapping
+    @ApiOperation("增加文献信息")
     public BaseResponse<Boolean> addDocument(DocumentAddRequest documentAddRequest) throws IOException, ParseException {
         if (documentAddRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -106,6 +108,7 @@ public class DocumentController {
      * 修改文献信息
      */
     @PostMapping("update")
+    @ApiOperation("修改文献信息")
     public BaseResponse<Boolean> updateDocument(DocumentUpdateRequest documentUpdateRequest) throws IOException, ParseException {
 
         if (documentUpdateRequest == null || documentUpdateRequest.getId() == 0) {
@@ -145,6 +148,7 @@ public class DocumentController {
      * 删除文献信息
      */
     @DeleteMapping
+    @ApiOperation(value = "删除文献信息",notes = "参数是id，待删除数据库记录的id")
     public BaseResponse<Boolean> delelteDocument(Long id) throws IOException {
 
         if (id == 0) {
@@ -163,6 +167,7 @@ public class DocumentController {
      */
 
     @GetMapping
+    @ApiOperation("根据id查询文献信息")
     public BaseResponse<Document> getDocument(Long id) throws IOException {
 
         if (id == 0) {
@@ -179,6 +184,7 @@ public class DocumentController {
      */
 
     @PostMapping("list")
+    @ApiOperation(value = "分页查询文献信息",notes = "current与size是必须传递的参数，其他的参数根据业务需求传递")
     public BaseResponse<Page<Document>> getDocumentlist(@RequestBody DocumentQueryRequest documentQueryRequest) {
         if (documentQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

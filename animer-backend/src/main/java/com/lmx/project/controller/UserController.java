@@ -18,6 +18,7 @@ import com.lmx.project.service.UserService;
 import com.lmx.project.until.FileUntil;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -62,6 +63,7 @@ public class UserController {
      * 用户注册
      */
     @PostMapping("resgiter")
+    @ApiOperation("用户注册")
     public BaseResponse<Boolean> AddUser(UserAddRequest userAddRequest) throws IOException {
 
         if (!StringUtils.isNotBlank(userAddRequest.getEmail())) {
@@ -99,6 +101,7 @@ public class UserController {
      * 用户注册
      */
     @PostMapping("wxresgiter")
+    @ApiOperation("微信端用户的注册")
     public BaseResponse<Boolean> AddUserWx(UserAddRequest userAddRequest) throws IOException {
 
         if (!StringUtils.isNotBlank(userAddRequest.getOpenid())) {
@@ -135,6 +138,7 @@ public class UserController {
      * 用户更新
      */
     @PutMapping("update")
+    @ApiOperation("用户信息的更新")
     public BaseResponse<Boolean> UpdateUser(UserUpdateRequest updateRequest) throws IOException {
 
         if (updateRequest.getId() == null || updateRequest.getId() == 0) {
@@ -181,6 +185,7 @@ public class UserController {
      */
 
     @PostMapping("login")
+    @ApiOperation("用户登录")
     public BaseResponse<User> LoginUser(@RequestBody UserLoginRequest userLoginRequest) throws IOException {
 
         if (!StringUtils.isNotBlank(userLoginRequest.getEmail())) {
@@ -212,6 +217,7 @@ public class UserController {
      * 用户登录 小程序端登录
      */
     @PostMapping("wxlogin")
+    @ApiOperation("小程序端用户的登录,openid")
     public BaseResponse<User> loginUserWX(@RequestBody UserLoginRequest userLoginRequest) throws IOException {
 
         if (!StringUtils.isNotBlank(userLoginRequest.getOpenid())) {
@@ -240,6 +246,7 @@ public class UserController {
      * 获取当前用户信息
      */
     @PostMapping()
+    @ApiOperation("获取当前用户信息")
     public BaseResponse<User> getUserByid(Long id) throws IOException {
         if (id == null || id == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "id属性不能为空或0");
@@ -265,6 +272,7 @@ public class UserController {
      * 分页查询用户信息
      */
     @PostMapping("list")
+    @ApiOperation("分页查询用户信息")
     public BaseResponse<Page<User>> getUserList(@RequestBody UserQueryRequest userQueryRequest) throws IOException {
         if (userQueryRequest==null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
