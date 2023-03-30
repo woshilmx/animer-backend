@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: openai-service
+  redis:
+    port: 6379
+    host: 114.116.233.39
+    database: 0
+    password: 123456
+
+openai:
+  token: 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
+  timeout: 5000
+proxy:
+  host: 127.0.0.1
+  port: 10809
